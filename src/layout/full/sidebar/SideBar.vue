@@ -39,7 +39,8 @@
       </div>
       
       <div class="footer-sidebar" slot="footer">
-        <vs-button icon="reply" color="danger" type="flat" to="/login"><span class="hide-in-minisidebar">log out</span></vs-button>
+        <!-- <vs-button icon="reply" color="danger" type="flat" to="/login"><span class="hide-in-minisidebar">log out</span></vs-button> -->
+        <vs-button icon="reply" color="danger" type="flat" @click="handleLogout"><span class="hide-in-minisidebar">log out</span></vs-button>
       </div>
       
     </vs-sidebar>
@@ -115,6 +116,13 @@ export default {
   },
   watch: {},
   methods: {
+    handleLogout() {
+      this.$store.dispatch('auth/logout').then(
+        () => {
+          this.$router.push('/login')
+        }
+      ) 
+    },
     handleWindowResize(event) {
       this.windowWidth = event.currentTarget.innerWidth;
       this.setSidebarWidth();

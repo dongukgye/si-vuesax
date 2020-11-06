@@ -42,6 +42,13 @@ export default {
     errors:[],
   }),
   methods:{
+    handleLogin() {
+      this.$store.dispatch("auth/login", { email: this.email, password: this.pwd }).then(
+        () => {
+          this.$router.push('/units');
+        }
+      )
+    },
     checkForm:function(e) {
       this.errors = [];
       if(!this.email) {
@@ -49,7 +56,7 @@ export default {
       } else if(!this.validEmail(this.email)) {
         this.errors.push("Valid email required.");        
       }else {
-        this.$router.push('/dashboard');
+        this.handleLogin()
       }
       if(!this.pwd) this.errors.push("Password required.");
       if(!this.errors.length) return true;

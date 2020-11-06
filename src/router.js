@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store/store'
 
 Vue.use(Router)
 
@@ -45,6 +46,7 @@ const router = new Router({
             // ======================
             // Theme routes / pages
             // ======================
+            meta: { requiresAuth: true },
             children: [{
                 path: '/dashboard',
                 name: 'Dashboard',
@@ -100,6 +102,23 @@ router.beforeResolve((to, from, next) => {
         NProgress.start()
     }
     next()
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!store.getters.isAuthenticated) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
 })
 
 router.afterEach(() => {
