@@ -10,6 +10,7 @@
     "dependencies": {
         "apexcharts": "^3.6.5",
         "auth0-js": "^9.11.3",
+        "axios": "^0.21.0",
         "chart.js": "^2.8.0",
         "core-js": "^2.6.5",
         "json-pretty-html": "1.0.2",
