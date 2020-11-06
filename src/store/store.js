@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import themeConfig from '@/../themeConfig.js'
+
+import { auth } from '@/store/modules/auth'
+
 Vue.use(Vuex)
 /* eslint-disable */
 export default new Vuex.Store({
@@ -35,7 +38,16 @@ export default new Vuex.Store({
         commit('UPDATE_SIDEBAR_WIDTH', width);
     }
   },
+  modules: {
+    auth
+  },
   getters:{
-  	
+    isAuthenticated: state => {
+      return state.auth.status.loggedIn
+    },
+
+    userInfo: state => {
+      return state.auth.userInfo
+    }
   }
 })
