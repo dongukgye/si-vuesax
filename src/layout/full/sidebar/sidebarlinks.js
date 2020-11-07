@@ -24,9 +24,9 @@ export default [{
     i18n: "Inventory Management"
 }, {
     url: "/parts",
-    name: "Pasks",
+    name: "Parts",
     icon: "mdi mdi-nut",
-    i18n: "Pasks",
+    i18n: "Parts",
     index: 4
 }, {
     url: "/categories",
