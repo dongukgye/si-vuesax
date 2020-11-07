@@ -52,37 +52,37 @@ const router = new Router({
                 name: 'Dashboard',
                 index: 1,
                 i18n: 'Dashboard',
-                component: () => import('@/views/StarterPage.vue')
+                component: () => import('@/views/Dashboard.vue')
             }, {
                 path: '/units',
                 name: 'Units',
                 index: 2,
                 i18n: 'Units',
-                component: () => import('@/views/Units.vue')
+                component: () => import('@/views/productions/Units.vue')
             }, {
                 path: '/tasks',
                 name: 'Tasks',
                 index: 3,
                 i18n: "Tasks",
-                component: () => import('@/views/Tasks.vue')
+                component: () => import('@/views/productions/Tasks.vue')
             }, {
                 path: '/parts',
                 name: 'Parts',
                 index: 4,
                 i18n: "Parts",
-                component: () => import('@/views/Parts.vue')
+                component: () => import('@/views/inventories/Parts.vue')
             }, {
                 path: '/categories',
                 name: 'Categories',
                 index: 5,
                 i18n: "Categories",
-                component: () => import('@/views/Categories.vue')
+                component: () => import('@/views/inventories/Categories.vue')
             }, {
                 path: '/orders',
                 name: 'Orders',
                 index: 6,
                 i18n: "Orders",
-                component: () => import('@/views/Orders.vue')
+                component: () => import('@/views/orders/Orders.vue')
             }]
         },
         // Redirect to 404 page, if no match found
