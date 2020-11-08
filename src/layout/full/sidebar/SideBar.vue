@@ -1,53 +1,74 @@
 <template lang="html">
-   <div id="parentx">
-    
-    <vs-sidebar default-index="1" :parent="parent" :hiddenBackground="doNotClose" color="primary" class="left-sidebar" spacer v-model="isSidebarActive" :click-not-close="doNotClose" :reduce="isSidebarReduced">
-      
-      <div class="header-sidebar text-center" slot="header">
-        <vs-avatar size="70px" :src="require('@/assets/images/users/1-old.jpg')"/>
-        <h4>Steave Jobs<br/>
-          <small>varun@gmail.com</small>
-        </h4>
-      </div>
-      
+  <div id="parentx">
+    <vs-sidebar
+      default-index="1"
+      :parent="parent"
+      :hiddenBackground="doNotClose"
+      color="primary"
+      class="left-sidebar"
+      spacer
+      v-model="isSidebarActive"
+      :click-not-close="doNotClose"
+      :reduce="isSidebarReduced"
+    >
       <div v-bar class="vs-scrollable">
-      <div>
-      <template v-for="(sidebarLink, index) in sidebarLinks">
+        <div>
+          <template v-for="(sidebarLink, index) in sidebarLinks">
+            <!-- Small Cap -->
+            <span
+              v-if="sidebarLink.title"
+              :key="index + '.' + index"
+              class="small-cap"
+              >{{ $t(sidebarLink.i18n) || sidebarLink.title }}</span
+            >
+            <template v-else-if="!sidebarLink.title">
+              <!-- Single Menu -->
+              <vs-sidebar-item
+                :key="sidebarLink.index"
+                :icon-pack="sidebarLink.icon"
+                :index="sidebarLink.index"
+                v-if="!sidebarLink.child"
+                :to="sidebarLink.url"
+              >
+                <span class="hide-in-minisidebar">{{
+                  $t(sidebarLink.i18n) || sidebarLink.name
+                }}</span>
+              </vs-sidebar-item>
+              <!-- Dropdown Menu -->
+              <template v-else>
+                <vs-sidebar-group
+                  :title="sidebarLink.name"
+                  :key="sidebarLink.index"
+                  :icon-pack="sidebarLink.icon"
+                  :open="isSubLinkActive(sidebarLink)"
+                >
+                  <li v-for="subLink in sidebarLink.child" :key="subLink.index">
+                    <vs-sidebar-item
+                      :icon-pack="subLink.icon"
+                      :to="subLink.url"
+                      :index="subLink.index"
+                    >
+                      <span class="hide-in-minisidebar">{{
+                        $t(subLink.i18n) || subLink.name
+                      }}</span>
+                    </vs-sidebar-item>
+                  </li>
+                </vs-sidebar-group>
+                <!-- /Dropdown Menu -->
+              </template>
+            </template>
+          </template>
+        </div>
+      </div>
 
-        <!-- Small Cap -->
-        <span v-if="sidebarLink.title"  :key="index + '.' + index" class="small-cap">{{ $t(sidebarLink.i18n) || sidebarLink.title }}</span>
-        <template v-else-if="!sidebarLink.title">
-          <!-- Single Menu -->
-          <vs-sidebar-item :key="sidebarLink.index" :icon-pack="sidebarLink.icon" :index="sidebarLink.index" v-if="!sidebarLink.child" :to="sidebarLink.url">
-            <span class="hide-in-minisidebar">{{ $t(sidebarLink.i18n) || sidebarLink.name }}</span>
-          </vs-sidebar-item>
-          <!-- Dropdown Menu -->
-          <template v-else >
-            <vs-sidebar-group :title="sidebarLink.name" :key="sidebarLink.index" :icon-pack="sidebarLink.icon" :open="isSubLinkActive(sidebarLink)">
-              <li v-for="(subLink) in sidebarLink.child" :key="subLink.index">
-                  <vs-sidebar-item :icon-pack="subLink.icon" :to="subLink.url" :index="subLink.index">
-                    <span class="hide-in-minisidebar">{{ $t(subLink.i18n) || subLink.name }}</span>
-                  </vs-sidebar-item>
-              </li>
-          </vs-sidebar-group>
-          <!-- /Dropdown Menu -->  
-        </template>
-        </template>
-         
-      </template> 
-      </div>
-      </div>
-      
       <div class="footer-sidebar" slot="footer">
         <!-- <vs-button icon="reply" color="danger" type="flat" to="/login"><span class="hide-in-minisidebar">log out</span></vs-button> -->
-        <vs-button icon="reply" color="danger" type="flat" @click="handleLogout"><span class="hide-in-minisidebar">log out</span></vs-button>
+        <vs-button icon="reply" color="danger" type="flat" @click="handleLogout"
+          ><span class="hide-in-minisidebar">log out</span></vs-button
+        >
       </div>
-      
     </vs-sidebar>
-
   </div>
-
-
 </template>
 
 <script>
@@ -55,24 +76,24 @@ export default {
   name: "SideBar",
   props: {
     parent: {
-      type: String
+      type: String,
     },
     sidebarLinks: {
       type: Array,
-      required: true
+      required: true,
     },
     subLink: {
-      type: Object
+      type: Object,
     },
     index: {
       default: null,
-      type: [String, Number]
-    }
+      type: [String, Number],
+    },
   },
   data: () => ({
     doNotClose: false,
     windowWidth: window.innerWidth,
-    round: true
+    round: true,
   }),
   computed: {
     //This is for mobile trigger
@@ -82,7 +103,7 @@ export default {
       },
       set(val) {
         this.$store.commit("TOGGLE_SIDEBAR_ACTIVE", val);
-      }
+      },
     },
     getActive: function getActive() {
       return this.$destroy();
@@ -97,14 +118,14 @@ export default {
       },
       set(val) {
         this.$store.commit("TOGGLE_REDUCE_SIDEBAR", val);
-      }
+      },
     },
     //This is for active group link
     isSubLinkActive() {
-      return sidebarLink => {
+      return (sidebarLink) => {
         let open = false;
         if (sidebarLink.child) {
-          sidebarLink.child.forEach(link => {
+          sidebarLink.child.forEach((link) => {
             if (this.$route.fullPath == link.url) {
               open = true;
             }
@@ -112,16 +133,14 @@ export default {
         }
         return open;
       };
-    }
+    },
   },
   watch: {},
   methods: {
     handleLogout() {
-      this.$store.dispatch('auth/logout').then(
-        () => {
-          this.$router.push('/login')
-        }
-      ) 
+      this.$store.dispatch("auth/logout").then(() => {
+        this.$router.push("/login");
+      });
     },
     handleWindowResize(event) {
       this.windowWidth = event.currentTarget.innerWidth;
@@ -139,7 +158,7 @@ export default {
           this.$store.dispatch("updateSidebarWidth", "mini");
         else this.$store.dispatch("updateSidebarWidth", "default");
       }
-    }
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -150,6 +169,6 @@ export default {
   beforeDestroy() {
     window.removeEventListener("resize", this.handleWindowResize);
     this.setSidebarWidth();
-  }
+  },
 };
 </script>
