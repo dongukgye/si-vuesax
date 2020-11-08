@@ -68,7 +68,7 @@
 
   .vs-card--content,
   .vs-card--header {
-    padding: 20px;
+    padding: 0px;
   }
 
   .vs-card--content {
@@ -191,14 +191,14 @@
 // 
 //  11) Vuesax Component: Row-Col
 // 
-.vs-row>.vs-col {
-  padding: $vs-column-padding;
-}
+// .vs-row>.vs-col {
+//   padding: $vs-column-padding;
+// }
 
-.vs-row {
-  margin: 0 -10px;
-  width: auto !important;
-}
+// .vs-row {
+//   margin: 0 -10px;
+//   width: auto !important;
+// }
 
 // 
 //  12) Vuesax Component: Switch
@@ -242,13 +242,34 @@
 // 
 //  15) Vuesax Component: Table
 //
-th .sort-th,
-th .vs-table-text {
-  padding: 10px;
-}
+// th .sort-th,
+// th .vs-table-text {
+//   padding: 10px;
+// }
 
 .vs-table--search {
-  margin: 15px;
+  margin: 10px;
+}
+.vs-table--tr {
+  line-height: 1.25rem;
+}
+
+// .vs-table--header {
+//   background-color: white;
+// }
+
+// .vs-table--pagination { 
+//   background-color: white;
+// }
+
+.vs-table-primary .is-selected {
+  -webkit-box-shadow: 0 0 rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 0 rgba(0, 0, 0, 0)  !important;
+}
+
+th.td-check .con-td-check {
+  -webkit-box-shadow: 0 0 rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 0 rgba(0, 0, 0, 0)  !important;
 }
 
 // 
